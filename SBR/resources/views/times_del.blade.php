@@ -321,10 +321,10 @@
         <h1 class="pixel-title">➕ CRIAR TIME</h1>
 
         <div class="instructions">
-            🎮 INSTRUÇÕES:
-            • Digite o nome do time
-            • Liste os integrantes separados por VÍRGULA
-            • Exemplo: João, Maria, Pedro, Ana
+            <strong>🎮 INSTRUÇÕES:</strong><br>
+            • Digite o nome do time<br>
+            • Liste os integrantes separados por VÍRGULA<br>
+            • Exemplo: <em>João, Maria, Pedro, Ana</em>
         </div>
 
         <div class="form-card">

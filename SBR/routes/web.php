@@ -18,10 +18,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+// ==================== ROTAS DOS TIMES ====================
 Route::get('/times', [TimeController::class, 'index'])->name('times.blade');
 Route::get('/times/criar', [TimeController::class, 'create'])->name('times_create.blade');
 Route::post('/times', [TimeController::class, 'store'])->name('times.store');
 Route::get('/times/{time}', [TimeController::class, 'show'])->name('times_ver.blade');
+Route::get('/times/{time}/editar', [TimeController::class, 'edit'])->name('times_edit.blade');
+Route::put('/times/{time}', [TimeController::class, 'update'])->name('times.update');
+Route::delete('/times/{time}', [TimeController::class, 'destroy'])->name('times.destroy');
+Route::get('/times/exemplo/criar', [TimeController::class, 'criarExemplo'])->name('times.exemplo');
+
+// ==================== ROTAS DA CORRIDA ====================
+Route::get('/corrida', function () {
+    return view('corrida');
+})->name('corrida.blade');
+
+// routes/web.php
+Route::get('/corrida/selecionar-times', [TimeController::class, 'selecionarTimes'])->name('corrida.selecionar');
+
+Route::post('/corrida/iniciar', [TimeController::class, 'iniciarCorrida'])->name('corrida.iniciar');
 
 require __DIR__.'/auth.php';

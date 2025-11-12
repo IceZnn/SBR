@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Time - Pixel Style</title>
+    <title>Editar {{ $time->nome_time }} - Pixel Style</title>
+    
     <style>
         * {
             margin: 0;
@@ -318,13 +319,12 @@
         <div class="pixel-decoration pixel-3"></div>
         <div class="pixel-decoration pixel-4"></div>
         
-        <h1 class="pixel-title">➕ CRIAR TIME</h1>
+        <h1 class="pixel-title">✏️ EDITAR TIME</h1>
 
         <div class="instructions">
-            🎮 INSTRUÇÕES:
-            • Digite o nome do time
-            • Liste os integrantes separados por VÍRGULA
-            • Exemplo: João, Maria, Pedro, Ana
+            🎯 EDITANDO:{{ $time->nome_time }} |
+            📅 CRIADO EM: {{ $time->created_at->format('d/m/Y') }} |
+            👥 INTEGRANTES: {{ count($time->integrantes) }} 
         </div>
 
         <div class="form-card">
@@ -333,8 +333,9 @@
             <div class="pixel-decoration pixel-3"></div>
             <div class="pixel-decoration pixel-4"></div>
             
-            <form action="{{ route('times.store') }}" method="POST">
+            <form action="{{ route('times.update', $time) }}" method="POST">
                 @csrf
+                @method('PUT')
                 
                 <div class="form-group">
                     <label for="nome_time" class="form-label">🎯 NOME DO TIME</label>
@@ -343,11 +344,12 @@
                         id="nome_time" 
                         name="nome_time" 
                         class="form-input" 
+                        value="{{ $time->nome_time }}"
                         placeholder="EX: VELOCISTAS AZUIS"
                         maxlength="50"
                         required
                     >
-                    <div class="character-count" id="nome-count">0/50 caracteres</div>
+                    <div class="character-count" id="nome-count">{{ strlen($time->nome_time) }}/50 caracteres</div>
                 </div>
                 
                 <div class="form-group">
@@ -359,12 +361,13 @@
                         rows="4" 
                         placeholder="DIGITE OS NOMES SEPARADOS POR VÍRGULA&#10;EX: JOÃO, MARIA, PEDRO, ANA"
                         required
-                    ></textarea>
-                    <div class="character-count" id="integrantes-count">0 integrantes</div>
+                    >{{ implode(', ', $time->integrantes) }}</textarea>
+                    <div class="character-count" id="integrantes-count">{{ count($time->integrantes) }} integrantes</div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn-pixel btn-success">💾 SALVAR TIME</button>
+                    <button type="submit" class="btn-pixel btn-success">💾 SALVAR ALTERAÇÕES</button>
+                    <a href="{{ route('times_ver.blade', $time) }}" class="btn-pixel btn-secondary">❌ CANCELAR</a>
                     <a href="{{ route('times.blade') }}" class="btn-pixel btn-secondary">↩️ VOLTAR</a>
                 </div>
             </form>
