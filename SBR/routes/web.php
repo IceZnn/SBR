@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // ==================== ROTAS DOS TIMES ====================
+Route::get('/ranking', [TimeController::class, 'ranking'])->name('ranking.blade');
 Route::get('/times', [TimeController::class, 'index'])->name('times.blade');
 Route::get('/times/criar', [TimeController::class, 'create'])->name('times_create.blade');
 Route::post('/times', [TimeController::class, 'store'])->name('times.store');
@@ -32,6 +33,7 @@ Route::get('/times/exemplo/criar', [TimeController::class, 'criarExemplo'])->nam
 Route::get('/corrida', function () {
     return view('corrida');
 })->name('corrida.blade');
+Route::post('/corrida/salvar-resultado', [TimeController::class, 'salvarResultado'])->name('corrida.salvar');
 
 // routes/web.php
 Route::get('/corrida/selecionar-times', [TimeController::class, 'selecionarTimes'])->name('corrida.selecionar');

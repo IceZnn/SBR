@@ -337,6 +337,63 @@
             @endif
         </div>
     </div>
+    <!-- BOTÃO RANKING -->
+    
+    <div style="text-align: center; margin: 25px 0;">
+        <a href="{{ route('ranking.blade') }}" class="btn-pixel" style="
+            background: linear-gradient(135deg, #ffd93d, #ffb347); 
+            border-bottom: 4px solid #b36b00; 
+            border-right: 4px solid #b36b00; 
+            color: #5a2d91; 
+            font-size: 16px; 
+            padding: 20px 35px; 
+            margin: 12px; 
+            display: inline-block; 
+            min-width: 180px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+            box-shadow: 0 6px 12px rgba(255, 217, 61, 0.3);
+            transition: all 0.3s ease;
+        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 16px rgba(255,217,61,0.4)'" 
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 12px rgba(255,217,61,0.3)'">
+            <br>RANKING
+        </a>
+
+        <a href="{{ route('corrida.selecionar') }}" class="btn-pixel" style="
+            background: linear-gradient(135deg, #4ecdc4, #44a08d); 
+            border-bottom: 4px solid #2a8c85; 
+            border-right: 4px solid #2a8c85; 
+            font-size: 16px; 
+            padding: 20px 35px; 
+            margin: 12px; 
+            display: inline-block; 
+            min-width: 180px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+            box-shadow: 0 6px 12px rgba(78, 205, 196, 0.3);
+            transition: all 0.3s ease;
+        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 16px rgba(78,205,196,0.4)'" 
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 12px rgba(78,205,196,0.3)'">
+            <br>NOVA CORRIDA
+        </a>
+
+        <a href="{{ route('dashboard') }}" class="btn-pixel" style="
+            background: linear-gradient(135deg, #b27bff, #8a4fff); 
+            border-bottom: 4px solid #5a2d91; 
+            border-right: 4px solid #5a2d91; 
+            font-size: 16px; 
+            padding: 20px 35px; 
+            margin: 12px; 
+            display: inline-block; 
+            min-width: 180px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+            box-shadow: 0 6px 12px rgba(138, 79, 255, 0.3);
+            transition: all 0.3s ease;
+        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 16px rgba(138,79,255,0.4)'" 
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 12px rgba(138,79,255,0.3)'">
+            <br>INÍCIO
+    </a>
+    </div>
+        
+    
 
     <script>
         // Efeitos interativos

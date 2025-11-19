@@ -75,168 +75,20 @@
             font-size: 10px;
         }
 
-        .winners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .winner-card {
-            background: linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%);
-            border: 3px solid #8a4fff;
-            padding: 20px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .winner-card:hover {
-            transform: translateY(-5px);
-            border-color: #ffd93d;
-            box-shadow: 0 10px 25px rgba(255, 217, 61, 0.3);
-        }
-
-        .winner-card.gold {
-            border-color: #ffd93d;
-            background: linear-gradient(135deg, #5a2d91 0%, #7a4da1 100%);
-        }
-
-        .winner-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #8a4fff;
-        }
-
-        .trophy-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            filter: drop-shadow(2px 2px 0 #5a2d91);
-        }
-
-        .winner-info {
-            flex: 1;
-        }
-
-        .winner-team {
-            color: #ffd93d;
-            font-size: 14px;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 0 #5a2d91;
-        }
-
-        .winner-runner {
-            color: #4ecdc4;
-            font-size: 10px;
-        }
-
-        .race-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .detail-item {
-            background: rgba(26, 15, 46, 0.5);
-            padding: 8px;
-            border: 1px solid #8a4fff;
-        }
-
-        .detail-label {
-            color: #b27bff;
-            font-size: 8px;
-            margin-bottom: 3px;
-        }
-
-        .detail-value {
-            color: #fff;
-            font-size: 10px;
-        }
-
-        .vs-badge {
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            color: #1a0f2e;
-            padding: 5px 10px;
-            font-size: 8px;
-            font-weight: bold;
-            border: 2px solid #1a0f2e;
+        .empty-state {
             text-align: center;
-            margin: 10px 0;
-        }
-
-        .date-info {
-            text-align: center;
+            padding: 60px 20px;
             color: #d4b3ff;
-            font-size: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #8a4fff;
+            background: rgba(26, 15, 46, 0.5);
+            border: 2px solid #8a4fff;
+            margin: 20px 0;
         }
 
-        .podium-section {
-            margin: 40px 0;
-        }
-
-        .podium-title {
-            color: #ffd93d;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0 #5a2d91;
-        }
-
-        .podium {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            align-items: end;
-        }
-
-        .podium-place {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%);
-            border: 3px solid #8a4fff;
-            position: relative;
-        }
-
-        .podium-place.gold {
-            border-color: #ffd93d;
-            background: linear-gradient(135deg, #ffd93d, #ffdf60);
-            color: #5a2d91;
-            height: 180px;
-        }
-
-        .podium-place.silver {
-            border-color: #95a5a6;
-            background: linear-gradient(135deg, #95a5a6, #a5b5b6);
-            color: #1a0f2e;
-            height: 150px;
-        }
-
-        .podium-place.bronze {
-            border-color: #cd7f32;
-            background: linear-gradient(135deg, #cd7f32, #dd8f42);
-            color: #1a0f2e;
-            height: 130px;
-        }
-        
-        .place-number {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-        }
-
-        .place-team {
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .place-wins {
-            font-size: 8px;
+        .empty-state div:first-child {
+            font-size: 16px;
+            color: #b27bff;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 0 #5a2d91;
         }
 
         .controls {
@@ -308,19 +160,31 @@
             z-index: 1000;
         }
 
-        .empty-state {
+        /* Mensagem de construção */
+        .construction-message {
             text-align: center;
-            padding: 60px 20px;
-            color: #d4b3ff;
-            background: rgba(26, 15, 46, 0.5);
-            border: 2px solid #8a4fff;
+            padding: 40px;
+            background: linear-gradient(135deg, #5a2d91 0%, #6a3da1 100%);
+            border: 3px solid #ffd93d;
+            margin: 30px 0;
         }
 
-        .empty-state div:first-child {
-            font-size: 16px;
-            color: #b27bff;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 0 #5a2d91;
+        .construction-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(2px 2px 0 #5a2d91);
+        }
+
+        .construction-text {
+            color: #ffd93d;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #5a2d91;
+        }
+
+        .construction-subtext {
+            color: #d4b3ff;
+            font-size: 10px;
         }
 
         /* Responsive */
@@ -331,19 +195,6 @@
             
             .pixel-title {
                 font-size: 18px;
-            }
-            
-            .winners-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .podium {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .podium-place {
-                height: 120px !important;
             }
             
             .controls {
@@ -393,148 +244,136 @@
         <div class="pixel-decoration pixel-3"></div>
         <div class="pixel-decoration pixel-4"></div>
         
-        <h1 class="pixel-title">🏆 CATÁLOGO DE VENCEDORES 🏆</h1>
+        <h1 class="pixel-title">🏆 RANKING OFICIAL 🏆</h1>
 
         <!-- Estatísticas Gerais -->
         <div class="stats-header">
             <div class="stat-card">
-                <div class="stat-value" id="total-races">{{ $results->count() }}</div>
+                <div class="stat-value">{{ $totalRaces }}</div>
                 <div class="stat-label">TOTAL DE CORRIDAS</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="unique-winners">{{ $uniqueWinners }}</div>
+                <div class="stat-value">{{ $uniqueWinners }}</div>
                 <div class="stat-label">TIMES VENCEDORES</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="avg-time">{{ $avgTime }}</div>
+                <div class="stat-value">{{ $avgTime }}</div>
                 <div class="stat-label">TEMPO MÉDIO</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="last-race">{{ $lastRaceDate }}</div>
+                <div class="stat-value">{{ $lastRaceDate }}</div>
                 <div class="stat-label">ÚLTIMA CORRIDA</div>
             </div>
         </div>
 
-        <!-- Pódio dos Melhores Times ABC -->
-        @if($topTeams->count() > 0)
-        <div class="podium-section">
-            <h2 class="podium-title">🎖️ PODIUM DOS MELHORES TIMES 🎖️</h2>
-            <div class="podium">
-                @foreach($topTeams as $index => $team)
-                <div class="podium-place @if($index == 0)gold @elseif($index == 1)silver @else bronze @endif">
-                    <div class="place-number">
-                        @if($index == 0)🥇
-                        @elseif($index == 1)🥈
-                        @else 🥉
-                        @endif
-                    </div>
-                    <div class="place-team">{{ $team->winner_team_name }}</div>
-                    <div class="place-wins">{{ $team->vitorias }} VITÓRIAS</div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        @endif
+        <!-- Mensagem de Construção -->
+        
 
-        <!-- Lista de Vencedores -->
-        <h2 style="color: #b27bff; font-size: 16px; text-align: center; margin: 30px 0 20px 0; text-shadow: 2px 2px 0 #5a2d91;">
-            📜 HISTÓRICO COMPLETO DE CORRIDAS
+        <!-- Mensagem quando não há corridas -->
+       <!-- Lista de Corridas Realizadas -->
+        <!-- Lista de Corridas Realizadas -->
+    @if($totalRaces > 0)
+    <div style="margin: 40px 0;">
+        <h2 style="color: #ffd93d; font-size: 18px; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 0 #5a2d91; padding: 10px; border-bottom: 2px solid #ffd93d;">
+            
         </h2>
-
-        @if($results->count() > 0)
-        <div class="winners-grid">
-            @foreach($results as $result)
-            <div class="winner-card @if($loop->first)gold @endif">
-                <div class="winner-header">
-                    <div class="trophy-icon">
-                        @if($loop->iteration == 1)🏆
-                        @elseif($loop->iteration <= 3)🥇
-                        @else 🏅
-                        @endif
-                    </div>
-                    <div class="winner-info">
-                        <div class="winner-team">{{ $result->winner_team_name }}</div>
-                        <div class="winner-runner">Corredor: {{ $result->winner_runner_name }}</div>
-                    </div>
-                </div>
-
-                <div class="vs-badge">VS</div>
-
-                <div class="race-details">
-                    <div class="detail-item">
-                        <div class="detail-label">TIME VENCEDOR</div>
-                        <div class="detail-value">{{ $result->winner_team_name }}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">TIME PERDEDOR</div>
-                        <div class="detail-value">{{ $result->loser_team_name }}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">TEMPO DA CORRIDA</div>
-                        <div class="detail-value">{{ number_format($result->race_time, 2) }}s</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">CORREDOR</div>
-                        <div class="detail-value">{{ $result->winner_runner_name }}</div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+            @foreach($results as $index => $result)
+            <div style="
+                background: linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%); 
+                border: 3px solid #8a4fff; 
+                padding: 20px; 
+                border-radius: 8px;
+                box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+                transition: all 0.3s ease;
+            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(255,217,61,0.3)'" 
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.3)'">
+                
+                <!-- Cabeçalho do Card -->
+                <div style="display: flex; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #8a4fff;">
+                    <div style="flex: 1;">
+                        <div style="color: #ffd93d; font-size: 14px; font-weight: bold; margin-bottom: 5px; text-shadow: 1px 1px 0 #5a2d91;">
+                            {{ $result->winner_team_name }}
+                        </div>
+                        <div style="color: #4ecdc4; font-size: 10px;">
+                            🏃 {{ $result->winner_runner_name }}
+                        </div>
                     </div>
                 </div>
 
-                <div class="date-info">
-                    Corrida realizada em: {{ $result->created_at->format('d/m/Y H:i') }}
+                <!-- Detalhes da Corrida -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    <div style="background: rgba(26, 15, 46, 0.5); padding: 8px; border: 1px solid #8a4fff; text-align: center;">
+                        <div style="color: #b27bff; font-size: 8px; margin-bottom: 3px;">⏱️ TEMPO</div>
+                        <div style="color: #4ecdc4; font-size: 12px; font-weight: bold;">{{ number_format($result->race_time, 2) }}s</div>
+                    </div>
+                    <div style="background: rgba(26, 15, 46, 0.5); padding: 8px; border: 1px solid #8a4fff; text-align: center;">
+                        <div style="color: #b27bff; font-size: 8px; margin-bottom: 3px;">📅 DATA</div>
+                        <div style="color: #d4b3ff; font-size: 9px;">{{ $result->created_at->format('d/m/Y') }}</div>
+                    </div>
+                </div>
+
+                <!-- VS Badge -->
+                <div style="
+                    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+                    color: #1a0f2e;
+                    padding: 6px 12px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    border: 2px solid #1a0f2e;
+                    text-align: center;
+                    margin: 10px 0;
+                    border-radius: 4px;
+                    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+                ">
+                    VS
+                </div>
+
+                <!-- Time Perdedor -->
+                <div style="text-align: center; color: #ff6b6b; font-size: 11px; font-weight: bold; padding: 8px; background: rgba(255,107,107,0.1); border-radius: 4px;">
+                    {{ $result->loser_team_name }}
+                </div>
+
+                <!-- Rodapé -->
+                <div style="text-align: center; color: #d4b3ff; font-size: 8px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #8a4fff;">
+                    🕒 {{ $result->created_at->format('H:i') }}
                 </div>
             </div>
             @endforeach
         </div>
-        @else
-        <div class="empty-state">
-            <div>🎯 NENHUMA CORRIDA REGISTRADA</div>
-            <div>Volte à página de corridas para começar a competir!</div>
-        </div>
-        @endif
+    </div>
+@endif
 
         <!-- Controles -->
         <div class="controls">
-            <a href="{{ route('corrida.blade') }}" class="btn-pixel">🏁 VOLTAR ÀS CORRIDAS</a>
-            <a href="{{ route('times.blade') }}" class="btn-pixel">👥 VER TIMES</a>
-            <a href="{{ route('dashboard') }}" class="btn-pixel">🏠 INÍCIO</a>
-            <button onclick="location.reload()" class="btn-pixel btn-gold">🔄 ATUALIZAR</button>
+            <a href="{{ route('corrida.selecionar') }}" class="btn-pixel">🏁 INICIAR CORRIDA</a>
+            <a href="{{ route('times.blade') }}" class="btn-pixel">👥 GERENCIAR TIMES</a>
+            <a href="{{ route('dashboard') }}" class="btn-pixel">🏠 VOLTAR AO INÍCIO</a>
         </div>
     </div>
 
     <script>
-        // Efeitos visuais
+        // Efeitos visuais básicos
         document.addEventListener('DOMContentLoaded', function() {
-            const winnerCards = document.querySelectorAll('.winner-card');
+            const buttons = document.querySelectorAll('.btn-pixel');
             
-            winnerCards.forEach((card, index) => {
-                // Efeito de entrada escalonada
-                setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.5s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100 * index);
-                }, 100);
-            });
-
-            // Efeito de brilho para o pódio
-            const podiumPlaces = document.querySelectorAll('.podium-place');
-            podiumPlaces.forEach(place => {
-                place.addEventListener('mouseenter', function() {
-                    this.style.filter = 'brightness(1.2)';
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translate(2px, 2px)';
                 });
                 
-                place.addEventListener('mouseleave', function() {
-                    this.style.filter = 'brightness(1)';
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translate(0, 0)';
                 });
             });
-        });
 
-        // Atualizar a página a cada 30 segundos para novos resultados
-        
+            // Efeito de pulso na mensagem de construção
+            const construction = document.querySelector('.construction-message');
+            setInterval(() => {
+                construction.style.borderColor = construction.style.borderColor === '#ffd93d' ? '#4ecdc4' : '#ffd93d';
+            }, 1000);
+        });
     </script>
 </body>
 </html>

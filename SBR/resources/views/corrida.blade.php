@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corrida - Pixel Style</title>
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         * {
             margin: 0;
@@ -101,6 +103,52 @@
             text-shadow: 1px 1px 0 #fff;
         }
 
+        .turbo-controls {
+            background: rgba(26, 15, 46, 0.7);
+            border: 3px solid #ff9900;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .turbo-slider {
+            width: 100%;
+            margin: 10px 0;
+            -webkit-appearance: none;
+            height: 12px;
+            background: linear-gradient(90deg, #4ecdc4, #ff9900, #ff0066);
+            border: 2px solid #8a4fff;
+            outline: none;
+            border-radius: 6px;
+        }
+
+        .turbo-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ffd93d;
+            border: 3px solid #b36b00;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+        }
+
+        .turbo-value {
+            color: #ffd93d;
+            font-size: 12px;
+            margin-top: 5px;
+            text-shadow: 1px 1px 0 #5a2d91;
+        }
+
+        .turbo-active {
+            animation: turboPulse 0.5s infinite;
+        }
+
+        @keyframes turboPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 217, 61, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 217, 61, 0.8); }
+        }
+
         .race-track {
             background: linear-gradient(to bottom, #2d1a4a, #1a0f2e);
             border: 4px solid #8a4fff;
@@ -140,28 +188,26 @@
         }
 
         .runner {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             position: absolute;
             left: 30px;
             transition: left 0.1s linear;
             z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: auto;
         }
 
         .runner.team1 {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            border: 3px solid #ff4757;
-            text-shadow: 2px 2px 0 #ff4757;
+            border-color: #ff4757;
+            background-image: url('alu_Azul.gif');
         }
 
         .runner.team2 {
-            background: linear-gradient(135deg, #4ecdc4, #6eddd4);
-            border: 3px solid #2a8c85;
-            text-shadow: 2px 2px 0 #2a8c85;
+            border-color: #2a8c85;
+            background-image: url('alucard.gif');
         }
 
         .runner::after {
@@ -195,28 +241,19 @@
 
         .finish-line {
             position: absolute;
-            right: 100px;
+            right: 80px;
             top: 0;
             bottom: 0;
-            width: 4px;
+            width: 6px;
             background: repeating-linear-gradient(
                 to bottom,
                 #ffd93d,
                 #ffd93d 10px,
-                transparent 10px,
-                transparent 20px
+                #ff0066 10px,
+                #ff0066 20px
             );
             z-index: 1;
-        }
-
-        .finish-line::after {
-            content: "🏁";
-            position: absolute;
-            right: -25px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 30px;
-            filter: drop-shadow(2px 2px 0 #5a2d91);
+            box-shadow: 0 0 15px rgba(255, 217, 61, 0.7);
         }
 
         .controls {
@@ -258,28 +295,16 @@
             border-right: 3px solid #2a8c85;
         }
 
-        .btn-success:hover {
-            background: linear-gradient(to bottom, #5eddd4, #4ecdc4);
-        }
-
         .btn-warning {
             background: linear-gradient(to bottom, #ff9900, #e58900);
             border-bottom: 3px solid #b36b00;
             border-right: 3px solid #b36b00;
         }
 
-        .btn-warning:hover {
-            background: linear-gradient(to bottom, #ffaa33, #ff9900);
-        }
-
         .btn-danger {
             background: linear-gradient(to bottom, #ff0066, #e5005c);
             border-bottom: 3px solid #b30047;
             border-right: 3px solid #b30047;
-        }
-
-        .btn-danger:hover {
-            background: linear-gradient(to bottom, #ff3388, #ff0066);
         }
 
         .race-info {
@@ -425,7 +450,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: pulse 2s infinite;
         }
-
+        
         @keyframes pulse {
             0%, 100% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
             50% { box-shadow: 0 4px 15px rgba(144, 238, 144, 0.4); }
@@ -477,7 +502,15 @@
             color: #b27bff;
         }
 
-        /* Responsive */
+        .probability-display {
+            background: rgba(26, 15, 46, 0.9);
+            border: 3px solid #ffd93d;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -518,31 +551,6 @@
             .runner {
                 width: 40px;
                 height: 40px;
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 15px;
-            }
-            
-            .pixel-title {
-                font-size: 16px;
-                padding: 10px;
-            }
-            
-            .btn-pixel {
-                padding: 12px 20px;
-                font-size: 10px;
-            }
-            
-            .scoreboard {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -560,29 +568,35 @@
         
         <h1 class="pixel-title">🏁 CORRIDA PIXELADA 🏁</h1>
 
-        <!-- Mensagem de times selecionados -->
         @if(session('corrida_iniciada'))
             <?php
                 $time1 = session('corrida_time1');
                 $time2 = session('corrida_time2');
+                $timeController = new App\Http\Controllers\TimeController();
+                $probabilidades = $timeController->calcularProbabilidadeVitoria($time1, $time2);
             ?>
-            <div class="status-message">
-                🏁 CORRIDA: <strong>{{ $time1->nome_time }}</strong> VS <strong>{{ $time2->nome_time }}</strong>
-            </div>
+            
+            
+
         @else
             <div class="status-message" style="border-color: #ff9900; color: #ff9900;">
                 ⚠️ NENHUM TIME SELECIONADO - <a href="{{ route('corrida.selecionar') }}" style="color: #ffd93d;">SELECIONAR TIMES</a>
             </div>
         @endif
 
-        <!-- Informações da Partida -->
+        <div class="turbo-controls">
+            <div style="color: #ffd93d; font-size: 10px; margin-bottom: 10px;">⚡ CONTROLE TURBO ⚡</div>
+            <input type="range" min="1" max="20" value="5" class="turbo-slider" id="turboSlider" onchange="updateTurbo()">
+            <div class="turbo-value" id="turboValue">Velocidade: 5x</div>
+        </div>
+
         @if(session('corrida_iniciada'))
         <div class="match-info">
             <div class="team-display team1">
                 <div class="team-name team1">{{ $time1->nome_time }}</div>
                 <div class="team-members">
                     <strong>Integrantes:</strong><br>
-                    {{ implode('<br>', $time1->integrantes) }}
+                    {{ implode(',', $time1->integrantes) }}
                 </div>
             </div>
             
@@ -592,12 +606,11 @@
                 <div class="team-name team2">{{ $time2->nome_time }}</div>
                 <div class="team-members">
                     <strong>Integrantes:</strong><br>
-                    {{ implode('<br>', $time2->integrantes) }}
+                    {{ implode(',', $time2->integrantes) }}
                 </div>
             </div>
         </div>
 
-        <!-- Placar dos Times -->
         <div class="team-score">
             <div class="team-points">
                 <div class="points-value" id="team1-points">0</div>
@@ -629,20 +642,18 @@
             <button class="btn-pixel btn-success" onclick="startRace()">🚀 INICIAR CORRIDA</button>
             <button class="btn-pixel btn-warning" onclick="resetRace()">🔄 REINICIAR</button>
             <a href="{{ route('corrida.selecionar') }}" class="btn-pixel">⚔️ SELECIONAR TIMES</a>
-            <a href="{{ route('times.blade') }}" class="btn-pixel">🏠 VOLTAR AOS TIMES</a>
+            <a href="{{ route('times.blade') }}" class="btn-pixel">👥 VER TIMES</a>
+            <a href="{{ route('ranking.blade') }}" class="btn-pixel btn-gold">🏆 RANKING</a>
         </div>
 
         <div class="race-track" id="raceTrack">
             <div class="finish-line"></div>
-            <!-- As pistas serão geradas dinamicamente pelo JavaScript -->
         </div>
 
         <div class="scoreboard">
             <div class="score-card">
                 <h3 class="score-title">🏆 CLASSIFICAÇÃO</h3>
-                <ul class="score-list" id="scoreboard">
-                    <!-- Resultados serão gerados aqui -->
-                </ul>
+                <ul class="score-list" id="scoreboard"></ul>
             </div>
             
             <div class="score-card">
@@ -665,6 +676,9 @@
         </div>
     </div>
 
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         let raceInterval;
         let raceTime = 0;
@@ -673,10 +687,203 @@
         let finishedRunners = [];
         let team1Points = 0;
         let team2Points = 0;
+        let turboMultiplier = 1;
+        let userAposta = null;
 
-        // Dados dos times da sessão
         const time1 = @json(session('corrida_time1', null));
         const time2 = @json(session('corrida_time2', null));
+
+        @if(session('corrida_iniciada'))
+            window.team1Probability = {{ $probabilidades['time1'] }};
+            window.team2Probability = {{ $probabilidades['time2'] }};
+        @else
+            window.team1Probability = 50;
+            window.team2Probability = 50;
+        @endif
+
+        // SISTEMA DE APOSTAS
+        function fazerAposta() {
+            if (!time1 || !time2) {
+                Swal.fire({
+                    title: '⚠️ ATENÇÃO',
+                    text: 'Selecione os times primeiro!',
+                    icon: 'warning',
+                    background: '#2d1a4a',
+                    color: '#fff'
+                });
+                return false;
+            }
+
+            Swal.fire({
+    title: '🎯 FAZER APOSTA',
+    html: `<div style="text-align: center; padding: 10px;">
+          <p style="color: #ffd93d; font-size: 14px; margin-bottom: 20px; text-shadow: 1px 1px 0 #5a2d91;">EM QUAL TIME VOCÊ APOSTA?</p>
+          <div style="display: flex; justify-content: space-around; align-items: center; margin: 25px 0; gap: 15px;">
+              <div style="text-align: center; flex: 1;">
+                  <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
+                      <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time1.nome_time}</div>
+                      <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team1Probability}% CHANCE</div>
+                  </div>
+                  <div style="color: #b27bff; font-size: 10px;">Time Vermelho 🔴</div>
+              </div>
+              
+              <div style="color: #ffd93d; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 0 #5a2d91; min-width: 50px;">VS</div>
+              
+              <div style="text-align: center; flex: 1;">
+                  <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
+                      <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time2.nome_time}</div>
+                      <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team2Probability}% CHANCE</div>
+                  </div>
+                  <div style="color: #b27bff; font-size: 10px;">Time Verde 🟢</div>
+              </div>
+          </div>
+          <div style="color: #d4b3ff; font-size: 10px; margin-top: 15px; border-top: 1px solid #8a4fff; padding-top: 10px;">
+              🎲 Escolha sabiamente!
+          </div>
+          </div>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: `🔴 APOSTAR NO ${time1.nome_time}`,
+    cancelButtonText: `🟢 APOSTAR NO ${time2.nome_time}`,
+    background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
+    color: '#fff',
+    width: '600px',
+    customClass: {
+        popup: 'sweetalert-popup',
+        confirmButton: 'btn-pixel',
+        cancelButton: 'btn-pixel',
+        title: 'sweetalert-title'
+    },
+    buttonsStyling: false
+}).then((result) => {
+    if (result.isConfirmed) {
+        userAposta = 'team1';
+        Swal.fire({
+            title: '✅ APOSTA CONFIRMADA!',
+            html: `<div style="text-align: center; padding: 20px;">
+                  <div style="font-size: 40px; margin-bottom: 15px;">🔴</div>
+                  <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
+                  <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
+                      <div style="color: white; font-size: 22px; font-weight: bold;">${time1.nome_time}</div>
+                      <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME VERMELHO</div>
+                  </div>
+                  <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
+                      🍀 BOA SORTE! QUE OS JOGOS COMECEM! 🍀
+                  </div>
+                  </div>`,
+            icon: 'success',
+            background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
+            color: '#fff',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'sweetalert-popup'
+            }
+        }).then(() => {
+            startRaceAfterAposta();
+        });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+        userAposta = 'team2';
+        Swal.fire({
+            title: '✅ APOSTA CONFIRMADA!',
+            html: `<div style="text-align: center; padding: 20px;">
+                  <div style="font-size: 40px; margin-bottom: 15px;">🟢</div>
+                  <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
+                  <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
+                      <div style="color: white; font-size: 22px; font-weight: bold;">${time2.nome_time}</div>
+                      <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME AZUL</div>
+                  </div>
+                  <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
+                      🍀 BOA SORTE! QUE OS JOGOS COMECEM! 🍀
+                  </div>
+                  </div>`,
+            icon: 'success',
+            background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
+            color: '#fff',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'sweetalert-popup'
+            }
+        
+                    }).then(() => {
+                        startRaceAfterAposta();
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    userAposta = 'team2';
+                    Swal.fire({
+                        title: '✅ APOSTA FEITA!',
+                        html: `<div style="text-align: center;">
+                              <p>Você apostou no:</p>
+                              <div style="color: #4ecdc4; font-size: 20px; font-weight: bold; margin: 10px 0;">${time2.nome_time}</div>
+                              <p style="color: #ffd93d;">Boa sorte! 🍀</p>
+                              </div>`,
+                        icon: 'success',
+                        background: '#2d1a4a',
+                        color: '#fff',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        startRaceAfterAposta();
+                    });
+                }
+            });
+            
+            return true;
+        }
+
+        function startRaceAfterAposta() {
+            if (raceStarted) return;
+            
+            raceStarted = true;
+            raceTime = 0;
+            updateRaceTime();
+            
+            raceInterval = setInterval(() => {
+                raceTime += 0.1;
+                updateRaceTime();
+                moveRunners();
+                checkFinishes();
+            }, 100);
+        }
+
+        function startRace() {
+            if (raceStarted) return;
+            fazerAposta();
+        }
+
+        function getRandomSpeed(baseSpeed, team) {
+            let probabilityBonus = 0;
+            
+            if (team === 'team1') {
+                probabilityBonus = (window.team1Probability - 50) * 0.05;
+            } else if (team === 'team2') {
+                probabilityBonus = (window.team2Probability - 50) * 0.05;
+            }
+            
+            const baseVariation = Math.random() * 2 - 1;
+            const luckFactor = Math.random() * 0.8 - 0.4;
+            const fatigue = raceTime > 10 ? (raceTime * 0.01) : 0;
+            const startBoost = raceTime < 3 ? 1.5 : 1;
+            
+            return (baseSpeed + baseVariation + luckFactor + probabilityBonus - fatigue) * startBoost * turboMultiplier;
+        }
+
+        function updateTurbo() {
+            const slider = document.getElementById('turboSlider');
+            const turboValue = document.getElementById('turboValue');
+            turboMultiplier = slider.value / 5;
+            turboValue.textContent = `Velocidade: ${slider.value}x`;
+            
+            const turboControls = document.querySelector('.turbo-controls');
+            if (slider.value > 15) {
+                turboControls.classList.add('turbo-active');
+            } else {
+                turboControls.classList.remove('turbo-active');
+            }
+        }
 
         function initRace() {
             const raceTrack = document.getElementById('raceTrack');
@@ -686,11 +893,13 @@
             finishedRunners = [];
             team1Points = 0;
             team2Points = 0;
+            raceTime = 0;
+            userAposta = null;
             
             document.getElementById('team1-points').textContent = '0';
             document.getElementById('team2-points').textContent = '0';
+            document.getElementById('race-time').textContent = '00:00';
             
-            // Se não há times selecionados, usar corredores padrão
             if (!time1 || !time2) {
                 createDefaultRunners();
             } else {
@@ -704,23 +913,23 @@
         function createTeamRunners() {
             const raceTrack = document.getElementById('raceTrack');
             
-            // Time 1
             time1.integrantes.forEach((integrante, index) => {
-                createRunner(integrante, 'team1', index);
+                const baseSpeed = 2 + (Math.random() * 3);
+                createRunner(integrante, 'team1', index, baseSpeed);
             });
             
-            // Time 2
             time2.integrantes.forEach((integrante, index) => {
-                createRunner(integrante, 'team2', index + time1.integrantes.length);
+                const baseSpeed = 2 + (Math.random() * 3);
+                createRunner(integrante, 'team2', index + time1.integrantes.length, baseSpeed);
             });
         }
 
         function createDefaultRunners() {
             const defaultRunners = [
-                { name: 'João', team: 'team1', speed: 3 },
-                { name: 'Maria', team: 'team1', speed: 4 },
-                { name: 'Pedro', team: 'team2', speed: 2 },
-                { name: 'Ana', team: 'team2', speed: 5 }
+                { name: 'João', team: 'team1', speed: 2.5 },
+                { name: 'Maria', team: 'team1', speed: 3.8 },
+                { name: 'Pedro', team: 'team2', speed: 3.2 },
+                { name: 'Ana', team: 'team2', speed: 4.1 }
             ];
             
             defaultRunners.forEach((runner, index) => {
@@ -736,7 +945,6 @@
             
             const runnerElement = document.createElement('div');
             runnerElement.className = `runner ${team}`;
-            runnerElement.innerHTML = '🏃';
             runnerElement.id = `runner-${index}`;
             
             const nameElement = document.createElement('div');
@@ -747,11 +955,12 @@
             lane.appendChild(nameElement);
             raceTrack.appendChild(lane);
             
-            const speed = customSpeed || (Math.floor(Math.random() * 3) + 2);
+            const speed = customSpeed || (2 + Math.random() * 3);
             
             runners.push({
                 name: name,
                 team: team,
+                baseSpeed: speed,
                 speed: speed,
                 element: runnerElement,
                 position: 30,
@@ -762,37 +971,24 @@
             runnerElement.style.left = '30px';
         }
 
-        function startRace() {
-            if (raceStarted) return;
-            
-            raceStarted = true;
-            raceTime = 0;
-            updateRaceTime();
-            
-            raceInterval = setInterval(() => {
-                raceTime += 0.1;
-                updateRaceTime();
-                moveRunners();
-                checkFinishes();
-            }, 100);
-        }
-
         function resetRace() {
             clearInterval(raceInterval);
             raceStarted = false;
-            raceTime = 0;
-            updateRaceTime();
             initRace();
         }
 
         function moveRunners() {
+            const raceTrack = document.getElementById('raceTrack');
+            const trackWidth = raceTrack.offsetWidth;
+            const finishLinePosition = trackWidth - 100;
+            
             runners.forEach(runner => {
                 if (!runner.finished) {
-                    const randomSpeed = runner.speed + (Math.random() - 0.5);
-                    runner.position += randomSpeed;
+                    const currentSpeed = getRandomSpeed(runner.baseSpeed, runner.team);
+                    runner.position += currentSpeed;
                     
-                    if (runner.position > window.innerWidth - 200) {
-                        runner.position = window.innerWidth - 200;
+                    if (runner.position >= finishLinePosition) {
+                        runner.position = finishLinePosition;
                         if (!runner.finished) {
                             finishRunner(runner);
                         }
@@ -812,9 +1008,7 @@
             runner.finishTime = raceTime;
             runner.element.classList.remove('running');
             runner.element.classList.add('winner');
-            runner.element.innerHTML = '🎉';
             
-            // Adiciona pontos ao time
             if (runner.team === 'team1') {
                 team1Points++;
                 document.getElementById('team1-points').textContent = team1Points;
@@ -833,8 +1027,12 @@
         }
 
         function checkFinishes() {
+            const raceTrack = document.getElementById('raceTrack');
+            const trackWidth = raceTrack.offsetWidth;
+            const finishLinePosition = trackWidth - 100;
+            
             runners.forEach(runner => {
-                if (!runner.finished && runner.position >= window.innerWidth - 200) {
+                if (!runner.finished && runner.position >= finishLinePosition) {
                     finishRunner(runner);
                 }
             });
@@ -847,26 +1045,80 @@
             const totalRaces = parseInt(document.getElementById('total-races').textContent) + 1;
             document.getElementById('total-races').textContent = totalRaces;
             
-            if (finishedRunners.length > 0) {
-                const fastest = finishedRunners.reduce((prev, current) => 
-                    (prev.finishTime < current.finishTime) ? prev : current
-                );
-                document.getElementById('fastest-time').textContent = formatTime(fastest.finishTime);
-            }
+            const winner = finishedRunners.reduce((prev, current) => 
+                (prev.finishTime < current.finishTime) ? prev : current
+            );
             
-            // Mostrar vencedor da corrida
-            let winnerMessage = '🏁 CORRIDA FINALIZADA! ';
-            if (team1Points > team2Points) {
-                winnerMessage += `VENCEDOR: ${time1 ? time1.nome_time : 'TIME 1'} 🏆`;
-            } else if (team2Points > team1Points) {
-                winnerMessage += `VENCEDOR: ${time2 ? time2.nome_time : 'TIME 2'} 🏆`;
-            } else {
-                winnerMessage += 'EMPATE! 🤝';
-            }
+            const winningTeam = winner.team;
             
-            setTimeout(() => {
-                alert(winnerMessage);
-            }, 500);
+            // VERIFICAR APOSTA
+            if (userAposta) {
+                const acertou = userAposta === winningTeam;
+                const timeApostado = userAposta === 'team1' ? time1.nome_time : time2.nome_time;
+                const timeVencedor = winningTeam === 'team1' ? time1.nome_time : time2.nome_time;
+                
+                setTimeout(() => {
+                    if (acertou) {
+                        Swal.fire({
+                            title: '🎉 PARABÉNS!',
+                            html: `<div style="text-align: center;">
+                                  <p>Você <strong style="color: #90ee90">ACERTOU</strong> a aposta! 🎯</p>
+                                  <p>Apostou no: <strong style="color: #ffd93d">${timeApostado}</strong></p>
+                                  <p>Vencedor: <strong style="color: #90ee90">${timeVencedor}</strong></p>
+                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;">🏆 Ganhou a aposta! 🏆</p>
+                                  </div>`,
+                            icon: 'success',
+                            background: '#2d1a4a',
+                            color: '#fff',
+                            confirmButtonText: '🎊 COMEMORAR!',
+                            customClass: {
+                                confirmButton: 'btn-pixel btn-success'
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: '💔 QUE PENA!',
+                            html: `<div style="text-align: center;">
+                                  <p>Você <strong style="color: #ff6b6b">ERROU</strong> a aposta 😔</p>
+                                  <p>Apostou no: <strong style="color: #ffd93d">${timeApostado}</strong></p>
+                                  <p>Vencedor: <strong style="color: #90ee90">${timeVencedor}</strong></p>
+                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;">Melhor sorte na próxima! 🍀</p>
+                                  </div>`,
+                            icon: 'error',
+                            background: '#2d1a4a',
+                            color: '#fff',
+                            confirmButtonText: '🔄 TENTAR NOVAMENTE',
+                            customClass: {
+                                confirmButton: 'btn-pixel btn-warning'
+                            }
+                        });
+                    }
+                }, 1000);
+            }
+
+            // Salvar no banco (código anterior)
+            const winningTeamId = winningTeam === 'team1' ? {{ $time1->id ?? 'null' }} : {{ $time2->id ?? 'null' }};
+            const losingTeamId = winningTeam === 'team1' ? {{ $time2->id ?? 'null' }} : {{ $time1->id ?? 'null' }};
+            const winningTeamName = winningTeam === 'team1' ? '{{ $time1->nome_time ?? "TIME 1" }}' : '{{ $time2->nome_time ?? "TIME 2" }}';
+            const losingTeamName = winningTeam === 'team1' ? '{{ $time2->nome_time ?? "TIME 2" }}' : '{{ $time1->nome_time ?? "TIME 1" }}';
+
+            if (winningTeamId && losingTeamId) {
+                fetch("{{ route('corrida.salvar') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        winner_team_id: winningTeamId,
+                        loser_team_id: losingTeamId,
+                        winner_runner_name: winner.name,
+                        race_time: parseFloat(raceTime.toFixed(2)),
+                        winner_team_name: winningTeamName,
+                        loser_team_name: losingTeamName
+                    })
+                });
+            }
         }
 
         function updateRaceTime() {
@@ -903,7 +1155,7 @@
                     <div class="runner-info">
                         <strong style="color: ${runner.team === 'team1' ? '#ff6b6b' : '#4ecdc4'}">${runner.name}</strong>
                         <div style="color: #d4b3ff; font-size: 8px;">
-                            ${runner.team === 'team1' ? (time1 ? time1.nome_time : 'TIME 1') : (time2 ? time2.nome_time : 'TIME 2')} | Vel: ${runner.speed.toFixed(1)}
+                            ${runner.team === 'team1' ? (time1 ? time1.nome_time : 'TIME 1') : (time2 ? time2.nome_time : 'TIME 2')} | Vel: ${runner.baseSpeed.toFixed(1)}
                         </div>
                     </div>
                     <div class="runner-time">${formatTime(runner.finishTime)}</div>
@@ -916,12 +1168,13 @@
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            const ms = Math.floor((seconds % 1) * 100);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
         }
-
-        // Inicializa a corrida quando a página carrega
+        
         document.addEventListener('DOMContentLoaded', function() {
             initRace();
+            updateTurbo();
         });
     </script>
 </body>

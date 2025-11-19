@@ -1,275 +1,308 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pixel Race</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Login - Pixel Race</title>
     <style>
-        /* === Estilo Pixelado Roxo (sem neon) === */
-        body {
-            background-color: #1b1025;
-            background-image:
-                linear-gradient(45deg, #231134 25%, transparent 25%),
-                linear-gradient(-45deg, #231134 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #231134 75%),
-                linear-gradient(-45deg, transparent 75%, #231134 75%);
-            background-size: 20px 20px;
-            font-family: 'Press Start 2P', monospace;
-            color: #d2b6ff;
-            image-rendering: pixelated;
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive, monospace;
+            background-color: #1a0f2e;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                linear-gradient(rgba(26, 15, 46, 0.9), rgba(26, 15, 46, 0.9)),
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(80, 20, 120, 0.2) 4px, rgba(80, 20, 120, 0.2) 8px);
         }
 
-        .pixel-box {
-            background-color: #2a1a3f;
-            border: 4px solid #6c4eb6;
-            padding: 2rem;
-            image-rendering: pixelated;
+        .login-container {
             width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
+            max-width: 450px;
+            border: 4px solid #8a4fff;
+            background-color: #2d1a4a;
+            box-shadow: 
+                0 0 0 4px #5a2d91,
+                8px 8px 0 #0f0820;
+            padding: 30px 25px;
+            position: relative;
         }
 
-        .title {
-            color: #c9a8ff;
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 2px solid #b27bff;
+            z-index: -1;
+        }
+
+        .login-header {
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 12px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px dotted #8a4fff;
         }
 
-        input, button, a, label {
-            font-family: 'Press Start 2P', monospace;
+        .login-title {
+            font-size: 24px;
+            color: #b27bff;
+            text-shadow: 3px 3px 0 #5a2d91;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .login-subtitle {
             font-size: 10px;
-            image-rendering: pixelated;
-        }
-
-        .input-label {
-            color: #d2b6ff;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .text-input {
-            border: 3px solid #6c4eb6;
-            background-color: #1b1025;
-            color: #d2b6ff;
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .text-input:focus {
-            outline: none;
-            border-color: #8d6ae9;
-            background-color: #261638;
-        }
-
-        .primary-button {
-            background-color: #6c4eb6;
-            border: 3px solid #1b1025;
-            color: #f0e6ff;
-            padding: 10px 16px;
-            transition: 0.2s;
-            cursor: pointer;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 10px;
-        }
-
-        .primary-button:hover {
-            background-color: #8d6ae9;
-            border-color: #2a1a3f;
-        }
-
-        a {
-            color: #b999ff;
-            text-decoration: underline;
-        }
-
-        a:hover {
-            color: #d2b6ff;
-        }
-
-        .input-error {
-            color: #ff6b6b;
-            font-size: 8px;
-            margin-top: 0.5rem;
-        }
-
-        .auth-session-status {
-            margin-bottom: 1rem;
-            padding: 10px;
-            background-color: #1b1025;
-            border: 2px solid #6c4eb6;
-            color: #d2b6ff;
-            font-size: 8px;
+            color: #d4b3ff;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
 
-        .flex {
-            display: flex;
-        }
-
-        .justify-center {
-            justify-content: center;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .min-h-screen {
-            min-height: 100vh;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .max-w-md {
-            max-width: 400px;
-        }
-
-        .block {
+        .form-label {
             display: block;
+            font-size: 12px;
+            color: #b27bff;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 #5a2d91;
         }
 
-        .mt-1 {
-            margin-top: 0.25rem;
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a0f2e;
+            border: 3px solid #8a4fff;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive, monospace;
+            font-size: 10px;
+            outline: none;
         }
 
-        .mt-2 {
-            margin-top: 0.5rem;
+        .form-input:focus {
+            border-color: #b27bff;
+            box-shadow: 0 0 0 2px #d4b3ff;
         }
 
-        .mt-4 {
-            margin-top: 1rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-
-        .ms-2 {
-            margin-left: 0.5rem;
-        }
-
-        .ms-3 {
-            margin-left: 0.75rem;
-        }
-
-        .inline-flex {
-            display: inline-flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-end {
-            justify-content: flex-end;
-        }
-
-        .text-xs {
+        .error-message {
+            color: #ff6b6b;
             font-size: 8px;
+            margin-top: 5px;
+            text-shadow: 1px 1px 0 #8b0000;
         }
 
-        .text-gray-400 {
-            color: #a0a0a0;
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        /* Estilo para checkbox personalizado */
-        input[type="checkbox"] {
+        .remember-checkbox {
             appearance: none;
             -webkit-appearance: none;
             width: 16px;
             height: 16px;
-            background-color: #1b1025;
-            border: 2px solid #6c4eb6;
+            background-color: #1a0f2e;
+            border: 2px solid #8a4fff;
             position: relative;
             cursor: pointer;
+            margin-right: 8px;
         }
 
-        input[type="checkbox"]:checked {
-            background-color: #6c4eb6;
+        .remember-checkbox:checked {
+            background-color: #8a4fff;
         }
 
-        input[type="checkbox"]:checked::after {
+        .remember-checkbox:checked::after {
             content: "✓";
-            color: #f0e6ff;
+            color: #fff;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 10px;
         }
+
+        .remember-label {
+            font-size: 10px;
+            color: #d4b3ff;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .register-link {
+            color: #b27bff;
+            font-size: 10px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .register-link:hover {
+            color: #d4b3ff;
+            text-decoration: underline;
+        }
+
+        .submit-button {
+            background-color: #8a4fff;
+            color: white;
+            border: none;
+            border-bottom: 4px solid #5a2d91;
+            border-right: 4px solid #5a2d91;
+            padding: 12px 20px;
+            font-family: 'Press Start 2P', cursive, monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .submit-button:hover {
+            background-color: #9a5fff;
+            transform: translate(2px, 2px);
+            border-bottom-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .submit-button:active {
+            background-color: #7a3fef;
+            transform: translate(4px, 4px);
+            border-bottom-width: 0;
+            border-right-width: 0;
+        }
+
+        .pixel-decoration {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #b27bff;
+        }
+
+        .pixel-1 { top: -4px; left: -4px; }
+        .pixel-2 { top: -4px; right: -4px; }
+        .pixel-3 { bottom: -4px; left: -4px; }
+        .pixel-4 { bottom: -4px; right: -4px; }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 0, 0, 0.1) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px 15px;
+            }
+            
+            .login-title {
+                font-size: 20px;
+            }
+            
+            .form-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .submit-button {
+                width: 100%;
+            }
+            
+            .register-link {
+                margin-bottom: 10px;
+            }
+        }
     </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="pixel-box w-full max-w-md">
-            <h1 class="title">LOGIN PIXEL RACE</h1>
+    <div class="scanlines"></div>
+    
+    <div class="login-container">
+        <div class="pixel-decoration pixel-1"></div>
+        <div class="pixel-decoration pixel-2"></div>
+        <div class="pixel-decoration pixel-3"></div>
+        <div class="pixel-decoration pixel-4"></div>
 
-            <!-- Session Status -->
-            <x-auth-session-status class="auth-session-status mb-4" :status="session('status')" />
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <!-- Email -->
-                <div class="form-group">
-                    <x-input-label for="email" :value="__('Email')" class="input-label" />
-                    <x-text-input id="email" class="text-input block mt-1 w-full"
-                        type="email"
-                        name="email"
-                        :value="old('email')"
-                        required autofocus autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="input-error mt-2" />
-                </div>
-
-                <!-- Password -->
-                <div class="form-group mt-4">
-                    <x-input-label for="password" :value="__('Password')" class="input-label" />
-                    <x-text-input id="password" class="text-input block mt-1 w-full"
-                        type="password"
-                        name="password"
-                        required autocomplete="current-password" />
-                    <x-input-error :messages="$errors->get('password')" class="input-error mt-2" />
-                </div>
-
-                <!-- Remember Me -->
-                <div class="block mt-4">
-                    <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                            name="remember">
-                        <span class="ms-2 text-xs text-gray-400">{{ __('Lembrar de mim') }}</span>
-                    </label>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex items-center justify-end mt-4">
-                    @if (Route::has('password.request'))
-                        <a class="underline text-xs" href="{{ route('password.request') }}">
-                            {{ __('Forgot your password?') }}
-                        </a>
-                    @endif
-
-                    <x-primary-button class="primary-button ms-3">
-                        {{ __('Log in') }}
-                    </x-primary-button>
-                </div>
-            </form>
+        <div class="login-header">
+            <h1 class="login-title">LOGIN</h1>
+            <p class="login-subtitle">ACESSAR CONTA</p>
         </div>
+
+        <form method="POST" action="#">
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email" class="form-label">EMAIL</label>
+                <input id="email" class="form-input" type="email" name="email" required autocomplete="username" />
+                <div class="error-message">
+                    <!-- Mensagens de erro do email aparecerão aqui -->
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password" class="form-label">SENHA</label>
+                <input id="password" class="form-input" type="password" name="password" required autocomplete="current-password" />
+                <div class="error-message">
+                    <!-- Mensagens de erro da senha aparecerão aqui -->
+                </div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="remember-me">
+                <input type="checkbox" id="remember_me" class="remember-checkbox" name="remember">
+                <label for="remember_me" class="remember-label">LEMBRAR DE MIM</label>
+            </div>
+
+            <div class="form-footer">
+                <a class="register-link" href="{{"register"}}">
+                    CRIAR CONTA
+                </a>
+
+                <button type="submit" class="submit-button">
+                    ENTRAR
+                </button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        // Efeitos de foco nos inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.boxShadow = '0 0 0 2px #d4b3ff, 0 0 10px #b27bff';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
 </body>
 </html>

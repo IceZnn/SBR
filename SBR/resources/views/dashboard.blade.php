@@ -421,7 +421,7 @@
         <div class="header-content">
             <h1 class="header-title">PIXEL RACE</h1>
             <div class="user-menu">
-                <div class="user-info">vai fugir mesmo fraco -----></div>
+                
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
                     <button type="submit" class="logout-button">🚪 SAIR</button>
@@ -434,7 +434,7 @@
     <main class="dashboard-main">
         <!-- Status Message -->
         <div class="status-message">
-            ✅ CONEXÃO ESTÁVEL | SISTEMA OPERACIONAL
+            SISTEMA CONECTADO
         </div>
 
         <!-- Welcome Card -->
@@ -444,7 +444,7 @@
             <div class="pixel-decoration pixel-3"></div>
             <div class="pixel-decoration pixel-4"></div>
             
-            <h1 class="welcome-title">🎯 LOGGADO</h1>
+            <h1 class="welcome-title">🎯 LOGADO</h1>
             
             <div class="welcome-message">
                 BEM-VINDO AO SISTEMA DE TIMES DE CORRIDA!<br>
@@ -497,18 +497,18 @@
 
         <!-- Navigation -->
         <div class="nav-grid">
-            <button class="nav-button" onclick="navigate('teams')">
+            <a class="nav-button" href="{{ route('times.blade') }}">
                 👥 GERENCIAR TIMES
-            </button>
-            <button class="nav-button" onclick="navigate('races')">
+            </a>
+            <a class="nav-button" href="{{ route('corrida.selecionar') }}">
                 🏁 VER CORRIDAS
-            </button>
-            <button class="nav-button" onclick="navigate('profile')">
+            </a>
+            <a class="nav-button" href="#">
                 👤 MEU PERFIL
-            </button>
-            <button class="nav-button" onclick="navigate('ranking')">
+            </a>
+            <a class="nav-button" href="{{ route('ranking.blade') }}">
                 🏆 RANKING
-            </button>
+            </a>
         </div>
     </main>
 
