@@ -415,7 +415,7 @@
             </div>
         </div>
 
-        <!-- Pódio dos Melhores Times AB -->
+        <!-- Pódio dos Melhores Times ABC -->
         @if($topTeams->count() > 0)
         <div class="podium-section">
             <h2 class="podium-title">🎖️ PODIUM DOS MELHORES TIMES 🎖️</h2>
