@@ -313,4 +313,32 @@ class TimeController extends Controller
 
         return view('corrida_historico', compact('results'));
     }
+
+
+    public function indexi()
+    {
+        $times = Time::all();
+        
+        // Calcular estatísticas
+        $totalTimes = Time::count();
+        $totalCorredores = 0;
+        
+        foreach ($times as $time) {
+            $totalCorredores += count($time->integrantes ?? []);
+        }
+        
+        $totalCorridas = RaceResult::count();
+        $totalVitorias = RaceResult::distinct('winner_team_id')->count('winner_team_id');
+
+        return view('times', compact(
+            'times', 
+            'totalTimes', 
+            'totalCorredores', 
+            'totalCorridas', 
+            'totalVitorias'
+        ));
+    }
+
+    // ... outros métodos do controller
+
 }

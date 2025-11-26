@@ -454,13 +454,14 @@
 
         <!-- Stats Grid -->
         <div class="stats-grid">
+
             <div class="stat-card">
                 <div class="pixel-decoration pixel-1"></div>
                 <div class="pixel-decoration pixel-2"></div>
                 <div class="pixel-decoration pixel-3"></div>
                 <div class="pixel-decoration pixel-4"></div>
                 <div class="stat-icon">👥</div>
-                <div class="stat-number">3</div>
+                <div class="stat-number">{{ $times->count() }}</div>
                 <div class="stat-label">TIMES ATIVOS</div>
             </div>
 
@@ -470,7 +471,7 @@
                 <div class="pixel-decoration pixel-3"></div>
                 <div class="pixel-decoration pixel-4"></div>
                 <div class="stat-icon">🚀</div>
-                <div class="stat-number">8</div>
+                <div class="stat-number">{{ $totalCorredores }}</div>
                 <div class="stat-label">CORREDORES</div>
             </div>
 
@@ -480,7 +481,7 @@
                 <div class="pixel-decoration pixel-3"></div>
                 <div class="pixel-decoration pixel-4"></div>
                 <div class="stat-icon">⭐</div>
-                <div class="stat-number">12</div>
+                <div class="stat-number">{{ \App\Models\RaceResult::count() }}</div>
                 <div class="stat-label">CORRIDAS</div>
             </div>
 
@@ -490,7 +491,7 @@
                 <div class="pixel-decoration pixel-3"></div>
                 <div class="pixel-decoration pixel-4"></div>
                 <div class="stat-icon">🏆</div>
-                <div class="stat-number">5</div>
+                <div class="stat-number">{{ \App\Models\RaceResult::distinct('winner_team_id')->count('winner_team_id') }}</div>
                 <div class="stat-label">VITÓRIAS</div>
             </div>
         </div>
