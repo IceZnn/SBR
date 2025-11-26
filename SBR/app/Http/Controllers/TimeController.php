@@ -22,14 +22,16 @@ class TimeController extends Controller
     {
         $request->validate([
             'nome_time' => 'required|string|max:255',
-            'integrantes' => 'required|string'
+            'integrantes' => 'required|string',
+            'nome_imagem' => 'required|string|max:255'
         ]);
 
         $integrantesArray = array_map('trim', explode(',', $request->integrantes));
 
         Time::create([
             'nome_time' => $request->nome_time,
-            'integrantes' => $integrantesArray
+            'integrantes' => $integrantesArray,
+            'nome_imagem' => $request->nome_imagem
         ]);
 
         return redirect()->route('times.blade')
@@ -50,14 +52,16 @@ class TimeController extends Controller
     {
         $request->validate([
             'nome_time' => 'required|string|max:255',
-            'integrantes' => 'required|string'
+            'integrantes' => 'required|string',
+            'nome_imagem' => 'required|string|max:255' // ADICIONADO AQUI
         ]);
 
         $integrantesArray = array_map('trim', explode(',', $request->integrantes));
 
         $time->update([
             'nome_time' => $request->nome_time,
-            'integrantes' => $integrantesArray
+            'integrantes' => $integrantesArray,
+            'nome_imagem' => $request->nome_imagem // ADICIONADO AQUI
         ]);
 
         return redirect()->route('times.blade')
@@ -77,11 +81,13 @@ class TimeController extends Controller
         $times = [
             [
                 'nome_time' => 'Velocistas',
-                'integrantes' => ['João', 'Maria', 'Pedro', 'Ana']
+                'integrantes' => ['João', 'Maria', 'Pedro', 'Ana'],
+                'nome_imagem' => 'velocistas.png' // ADICIONADO AQUI
             ],
             [
                 'nome_time' => 'Corredores', 
-                'integrantes' => ['Carlos', 'Julia', 'Lucas']
+                'integrantes' => ['Carlos', 'Julia', 'Lucas'],
+                'nome_imagem' => 'corredores.jpg' // ADICIONADO AQUI
             ]
         ];
 
@@ -166,6 +172,7 @@ class TimeController extends Controller
             ]);
         }
     }
+
     public function calcularProbabilidadeVitoria($time1, $time2)
     {
         // Fator 1: Número de integrantes
@@ -202,6 +209,7 @@ class TimeController extends Controller
             'time2' => $probabilidade2
         ];
     }
+
     /**
      * RANKING DE VELOCIDADE - CORRIDAS MAIS RÁPIDAS
      */
@@ -218,25 +226,25 @@ class TimeController extends Controller
                 ]);
             }
 
-        // Buscar resultados ordenados por velocidade (menor tempo primeiro)
-        $results = RaceResult::with(['winnerTeam', 'loserTeam'])
-            ->whereNotNull('race_time')
-            ->where('race_time', '>', 0)
-            ->orderBy('race_time', 'asc')
-            ->get();
+            // Buscar resultados ordenados por velocidade (menor tempo primeiro)
+            $results = RaceResult::with(['winnerTeam', 'loserTeam'])
+                ->whereNotNull('race_time')
+                ->where('race_time', '>', 0)
+                ->orderBy('race_time', 'asc')
+                ->get();
 
-        $totalRaces = $results->count();
-        $fastestTime = $totalRaces > 0 ? number_format($results->first()->race_time, 2) : '0.00';
-        $avgTime = $totalRaces > 0 ? number_format($results->avg('race_time'), 2) : '0.00';
-        $bestTeam = $totalRaces > 0 ? $results->first()->winner_team_name : 'N/A';
+            $totalRaces = $results->count();
+            $fastestTime = $totalRaces > 0 ? number_format($results->first()->race_time, 2) : '0.00';
+            $avgTime = $totalRaces > 0 ? number_format($results->avg('race_time'), 2) : '0.00';
+            $bestTeam = $totalRaces > 0 ? $results->first()->winner_team_name : 'N/A';
 
-        return view('ranking_velocidade', compact(
-            'results',
-            'totalRaces',
-            'fastestTime',
-            'avgTime',
-            'bestTeam'
-        ));
+            return view('ranking_velocidade', compact(
+                'results',
+                'totalRaces',
+                'fastestTime',
+                'avgTime',
+                'bestTeam'
+            ));
 
         } catch (\Exception $e) {
             return view('ranking_velocidade', [
@@ -270,9 +278,10 @@ class TimeController extends Controller
             'message' => 'Resultado da corrida salvo com sucesso!'
         ]);
     }
+
     /**
- * MOSTRAR PÁGINA DE CORRIDA
- */
+     * MOSTRAR PÁGINA DE CORRIDA
+     */
     public function corrida()
     {
         if (session('corrida_iniciada')) {
@@ -288,6 +297,7 @@ class TimeController extends Controller
         // Se não há corrida iniciada, passar probabilidades vazias
         return view('corrida', ['probabilidades' => null]);
     }
+
     /**
      * MOSTRAR HISTÓRICO DE CORRIDAS
      */

@@ -10,7 +10,8 @@ class Time extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome_time', 'integrantes'];
+    // ADICIONE 'nome_imagem' NO FILLABLE
+    protected $fillable = ['nome_time', 'integrantes', 'nome_imagem'];
 
     /**
      * The attributes that should be cast.
@@ -25,5 +26,16 @@ class Time extends Model
     public function getNumeroIntegrantesAttribute()
     {
         return count($this->integrantes ?? []);
+    }
+
+    /**
+     * Acessor para obter o caminho completo da imagem
+     */
+    public function getImagemCompletaAttribute()
+    {
+        if ($this->nome_imagem) {
+            return asset('storage/times/' . $this->nome_imagem);
+        }
+        return asset('storage/times/default.png');
     }
 }

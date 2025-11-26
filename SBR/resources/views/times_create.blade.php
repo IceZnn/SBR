@@ -255,6 +255,56 @@
             pointer-events: none;
             z-index: 1000;
         }
+        .gif-gallery {
+    background: linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%);
+    border: 3px solid #8a4fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+        }
+
+        .gallery-title {
+            color: #b27bff;
+            text-shadow: 2px 2px 0 #5a2d91;
+        }
+
+        .gif-item {
+            background: rgba(26, 15, 46, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .gif-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 79, 255, 0.3);
+        }
+
+        .gif-preview {
+            width: 80px;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: 2px solid #8a4fff;
+            border-radius: 5px;
+            image-rendering: auto;
+        }
+
+        .gif-name {
+            color: #ffd93d !important;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .gif-info {
+            color: #d4b3ff !important;
+            font-size: 12px;
+        }
+
+        /* Cores das bordas dos cards */
+        .border-primary { border-color: #8a4fff !important; }
+        .border-danger { border-color: #ff6b6b !important; }
+        .border-success { border-color: #4ecdc4 !important; }
+        .border-info { border-color: #45b7d1 !important; }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -363,12 +413,75 @@
                     <div class="character-count" id="integrantes-count">0 integrantes</div>
                 </div>
 
+                <div class="form-group">
+                    <label for="nome_imagem" class="form-label">🖼️ NOME DA IMAGEM DO TIME</label>
+                    <input 
+                        type="text" 
+                        id="nome_imagem" 
+                        name="nome_imagem" 
+                        class="form-input" 
+                        placeholder="EX: velocidade.gif, zoom.gif."
+                        maxlength="100"
+                        required
+                    >
+                    <div class="character-count" id="imagem-count">0/100 caracteres</div>
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-pixel btn-success">💾 SALVAR TIME</button>
                     <a href="{{ route('times.blade') }}" class="btn-pixel btn-secondary">↩️ VOLTAR</a>
                 </div>
             </form>
         </div>
+        <div class="gif-gallery">
+    <h3 class="gallery-title text-center mb-4">🎮 GALERIA DE GIFs DISPONÍVEIS</h3>
+    
+    <div class="row g-3">
+            <!-- GIF 1 -->
+            <div class="col-md-3 col-6">
+                <div class="card gif-item h-100 border-primary">
+                    <div class="card-body text-center p-3">
+                        <div class="gif-preview mx-auto mb-3" style="background-image: url('{{ asset('zoom.gif') }}')"></div>
+                        <h6 class="card-title gif-name text-warning mb-1">Blessed One</h6>
+                        <p class="card-text gif-info text-muted small">zoom.gif</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GIF 2 -->
+            <div class="col-md-3 col-6">
+                <div class="card gif-item h-100 border-danger">
+                    <div class="card-body text-center p-3">
+                        <div class="gif-preview mx-auto mb-3" style="background-image: url('{{ asset('carmesin.gif') }}')"></div>
+                        <h6 class="card-title gif-name text-warning mb-1">Bird Of Hermes</h6>
+                        <p class="card-text gif-info text-muted small">carmesin.gif</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GIF 3 -->
+            <div class="col-md-3 col-6">
+                <div class="card gif-item h-100 border-success">
+                    <div class="card-body text-center p-3">
+                        <div class="gif-preview mx-auto mb-3" style="background-image: url('{{ asset('velocista.gif') }}')"></div>
+                        <h6 class="card-title gif-name text-warning mb-1">He-man</h6>
+                        <p class="card-text gif-info text-muted small">velocista.gif</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GIF 4 -->
+            <div class="col-md-3 col-6">
+                <div class="card gif-item h-100 border-info">
+                    <div class="card-body text-center p-3">
+                        <div class="gif-preview mx-auto mb-3" style="background-image: url('{{ asset('velocidade.gif') }}')"></div>
+                        <h6 class="card-title gif-name text-warning mb-1">Sônico</h6>
+                        <p class="card-text gif-info text-muted small">velocidade.gif</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
         @if($errors->any())
         <div class="error-card">

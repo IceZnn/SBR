@@ -93,6 +93,15 @@
             line-height: 1.4;
         }
 
+        .team-image {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            image-rendering: auto;
+        }
+
         .vs-badge {
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
             color: #1a0f2e;
@@ -202,12 +211,10 @@
 
         .runner.team1 {
             border-color: #ff4757;
-            background-image: url('alu_Azul.gif');
         }
 
         .runner.team2 {
             border-color: #2a8c85;
-            background-image: url('alucard.gif');
         }
 
         .runner::after {
@@ -576,7 +583,20 @@
                 $probabilidades = $timeController->calcularProbabilidadeVitoria($time1, $time2);
             ?>
             
-            
+            <div class="probability-display">
+                <div style="color: #ffd93d; font-size: 12px; margin-bottom: 10px;">🎯 PROBABILIDADES DE VITÓRIA</div>
+                <div style="display: flex; justify-content: space-around; align-items: center;">
+                    <div style="text-align: center;">
+                        <div style="color: #ff6b6b; font-size: 16px; font-weight: bold;">{{ $probabilidades['time1'] }}%</div>
+                        <div style="color: #b27bff; font-size: 10px;">{{ $time1->nome_time }}</div>
+                    </div>
+                    <div style="color: #ffd93d; font-size: 14px;">VS</div>
+                    <div style="text-align: center;">
+                        <div style="color: #4ecdc4; font-size: 16px; font-weight: bold;">{{ $probabilidades['time2'] }}%</div>
+                        <div style="color: #b27bff; font-size: 10px;">{{ $time2->nome_time }}</div>
+                    </div>
+                </div>
+            </div>
 
         @else
             <div class="status-message" style="border-color: #ff9900; color: #ff9900;">
@@ -593,20 +613,22 @@
         @if(session('corrida_iniciada'))
         <div class="match-info">
             <div class="team-display team1">
+                <div class="team-image" style="background-image: url('{{ $time1->nome_imagem ?? 'alu_Azul.gif' }}');"></div>
                 <div class="team-name team1">{{ $time1->nome_time }}</div>
                 <div class="team-members">
                     <strong>Integrantes:</strong><br>
-                    {{ implode(',', $time1->integrantes) }}
+                    {{ implode(', ', $time1->integrantes) }}
                 </div>
             </div>
             
             <div class="vs-badge">VS</div>
             
             <div class="team-display team2">
+                <div class="team-image" style="background-image: url('{{ $time2->nome_imagem ?? 'alucard.gif' }}');"></div>
                 <div class="team-name team2">{{ $time2->nome_time }}</div>
                 <div class="team-members">
                     <strong>Integrantes:</strong><br>
-                    {{ implode(',', $time2->integrantes) }}
+                    {{ implode(', ', $time2->integrantes) }}
                 </div>
             </div>
         </div>
@@ -643,7 +665,7 @@
             <button class="btn-pixel btn-warning" onclick="resetRace()">🔄 REINICIAR</button>
             <a href="{{ route('corrida.selecionar') }}" class="btn-pixel">⚔️ SELECIONAR TIMES</a>
             <a href="{{ route('times.blade') }}" class="btn-pixel">👥 VER TIMES</a>
-            <a href="{{ route('ranking.blade') }}" class="btn-pixel btn-gold">🏆 RANKING</a>
+            <a href="{{ route('ranking.blade') }}" class="btn-pixel btn-success">🏆 RANKING</a>
         </div>
 
         <div class="race-track" id="raceTrack">
@@ -715,116 +737,90 @@
             }
 
             Swal.fire({
-    title: '🎯 FAZER APOSTA',
-    html: `<div style="text-align: center; padding: 10px;">
-          <p style="color: #ffd93d; font-size: 14px; margin-bottom: 20px; text-shadow: 1px 1px 0 #5a2d91;">EM QUAL TIME VOCÊ APOSTA?</p>
-          <div style="display: flex; justify-content: space-around; align-items: center; margin: 25px 0; gap: 15px;">
-              <div style="text-align: center; flex: 1;">
-                  <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
-                      <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time1.nome_time}</div>
-                      <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team1Probability}% CHANCE</div>
-                  </div>
-                  <div style="color: #b27bff; font-size: 10px;">Time Vermelho 🔴</div>
-              </div>
-              
-              <div style="color: #ffd93d; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 0 #5a2d91; min-width: 50px;">VS</div>
-              
-              <div style="text-align: center; flex: 1;">
-                  <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
-                      <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time2.nome_time}</div>
-                      <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team2Probability}% CHANCE</div>
-                  </div>
-                  <div style="color: #b27bff; font-size: 10px;">Time Verde 🟢</div>
-              </div>
-          </div>
-          <div style="color: #d4b3ff; font-size: 10px; margin-top: 15px; border-top: 1px solid #8a4fff; padding-top: 10px;">
-              🎲 Escolha sabiamente!
-          </div>
-          </div>`,
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: `🔴 APOSTAR NO ${time1.nome_time}`,
-    cancelButtonText: `🟢 APOSTAR NO ${time2.nome_time}`,
-    background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
-    color: '#fff',
-    width: '600px',
-    customClass: {
-        popup: 'sweetalert-popup',
-        confirmButton: 'btn-pixel',
-        cancelButton: 'btn-pixel',
-        title: 'sweetalert-title'
-    },
-    buttonsStyling: false
-}).then((result) => {
-    if (result.isConfirmed) {
-        userAposta = 'team1';
-        Swal.fire({
-            title: '✅ APOSTA CONFIRMADA!',
-            html: `<div style="text-align: center; padding: 20px;">
-                  <div style="font-size: 40px; margin-bottom: 15px;">🔴</div>
-                  <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
-                  <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
-                      <div style="color: white; font-size: 22px; font-weight: bold;">${time1.nome_time}</div>
-                      <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME VERMELHO</div>
-                  </div>
-                  <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
-                      🍀 BOA SORTE! QUE OS JOGOS COMECEM! 🍀
-                  </div>
-                  </div>`,
-            icon: 'success',
-            background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
-            color: '#fff',
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: true,
-            customClass: {
-                popup: 'sweetalert-popup'
-            }
-        }).then(() => {
-            startRaceAfterAposta();
-        });
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-        userAposta = 'team2';
-        Swal.fire({
-            title: '✅ APOSTA CONFIRMADA!',
-            html: `<div style="text-align: center; padding: 20px;">
-                  <div style="font-size: 40px; margin-bottom: 15px;">🟢</div>
-                  <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
-                  <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
-                      <div style="color: white; font-size: 22px; font-weight: bold;">${time2.nome_time}</div>
-                      <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME AZUL</div>
-                  </div>
-                  <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
-                      🍀 BOA SORTE! QUE OS JOGOS COMECEM! 🍀
-                  </div>
-                  </div>`,
-            icon: 'success',
-            background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
-            color: '#fff',
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: true,
-            customClass: {
-                popup: 'sweetalert-popup'
-            }
-        
+                title: ' FAZER APOSTA',
+                html: `<div style="text-align: center; padding: 10px;">
+                      <p style="color: #ffd93d; font-size: 14px; margin-bottom: 20px; text-shadow: 1px 1px 0 #5a2d91;">EM QUAL TIME VOCÊ APOSTA?</p>
+                      <div style="display: flex; justify-content: space-around; align-items: center; margin: 25px 0; gap: 15px;">
+                          <div style="text-align: center; flex: 1;">
+                              <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
+                                  <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time1.nome_time}</div>
+                                  <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team1Probability}% CHANCE</div>
+                              </div>
+                          </div>
+                          
+                          <div style="color: #ffd93d; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 0 #5a2d91; min-width: 50px;">VS</div>
+                          
+                          <div style="text-align: center; flex: 1;">
+                              <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 15px; border-radius: 10px; border: 2px solid #ffd93d; margin-bottom: 8px;">
+                                  <div style="color: white; font-size: 16px; font-weight: bold; margin-bottom: 5px;">${time2.nome_time}</div>
+                                  <div style="color: #ffd93d; font-size: 12px; font-weight: bold;">${window.team2Probability}% CHANCE</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div style="color: #d4b3ff; font-size: 10px; margin-top: 15px; border-top: 1px solid #8a4fff; padding-top: 10px;">
+                           Escolha sabiamente!
+                      </div>
+                      </div>`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: `🔴 APOSTAR NO ${time1.nome_time}`,
+                cancelButtonText: `🟢 APOSTAR NO ${time2.nome_time}`,
+                background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
+                color: '#fff',
+                width: '600px',
+                customClass: {
+                    popup: 'sweetalert-popup',
+                    confirmButton: 'btn-pixel',
+                    cancelButton: 'btn-pixel',
+                    title: 'sweetalert-title'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    userAposta = 'team1';
+                    Swal.fire({
+                        title: ' APOSTA CONFIRMADA!',
+                        html: `<div style="text-align: center; padding: 20px;">
+                              <div style="font-size: 40px; margin-bottom: 15px;">🔴</div>
+                              <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
+                              <div style="background: linear-gradient(135deg, #ff6b6b, #ff4757); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
+                                  <div style="color: white; font-size: 22px; font-weight: bold;">${time1.nome_time}</div>
+                                  <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME VERMELHO</div>
+                              </div>
+                              <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
+                                   BOA SORTE E QUE OS JOGOS COMECEM! 
+                              </div>
+                              </div>`,
+                        icon: 'success',
+                        background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
+                        color: '#fff',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true
                     }).then(() => {
                         startRaceAfterAposta();
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     userAposta = 'team2';
                     Swal.fire({
-                        title: '✅ APOSTA FEITA!',
-                        html: `<div style="text-align: center;">
-                              <p>Você apostou no:</p>
-                              <div style="color: #4ecdc4; font-size: 20px; font-weight: bold; margin: 10px 0;">${time2.nome_time}</div>
-                              <p style="color: #ffd93d;">Boa sorte! 🍀</p>
+                        title: ' APOSTA CONFIRMADA!',
+                        html: `<div style="text-align: center; padding: 20px;">
+                              <div style="font-size: 40px; margin-bottom: 15px;">🟢</div>
+                              <p style="color: #b27bff; font-size: 12px; margin-bottom: 10px;">VOCÊ APOSTOU NO:</p>
+                              <div style="background: linear-gradient(135deg, #4ecdc4, #2a8c85); padding: 20px; border-radius: 12px; border: 3px solid #ffd93d; margin: 15px 0;">
+                                  <div style="color: white; font-size: 22px; font-weight: bold;">${time2.nome_time}</div>
+                                  <div style="color: #ffd93d; font-size: 14px; margin-top: 8px;">TIME AZUL</div>
+                              </div>
+                              <div style="color: #ffd93d; font-size: 14px; margin-top: 15px; text-shadow: 1px 1px 0 #5a2d91;">
+                                   BOA SORTE E QUE OS JOGOS COMECEM! 
+                              </div>
                               </div>`,
                         icon: 'success',
-                        background: '#2d1a4a',
+                        background: 'linear-gradient(135deg, #2d1a4a 0%, #3d236a 100%)',
                         color: '#fff',
-                        timer: 2000,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true
                     }).then(() => {
                         startRaceAfterAposta();
                     });
@@ -947,6 +943,19 @@
             runnerElement.className = `runner ${team}`;
             runnerElement.id = `runner-${index}`;
             
+            // IMAGEM DINÂMICA BASEADA NO BANCO
+            let runnerImage = '';
+            if (team === 'team1' && time1 && time1.nome_imagem) {
+                runnerImage = time1.nome_imagem;
+            } else if (team === 'team2' && time2 && time2.nome_imagem) {
+                runnerImage = time2.nome_imagem;
+            } else {
+                // Fallback para imagens padrão
+                runnerImage = team === 'team1' ? 'alu_Azul.gif' : 'alucard.gif';
+            }
+            
+            runnerElement.style.backgroundImage = `url('${runnerImage}')`;
+            
             const nameElement = document.createElement('div');
             nameElement.className = `runner-name ${team}`;
             nameElement.textContent = name;
@@ -965,7 +974,8 @@
                 element: runnerElement,
                 position: 30,
                 finished: false,
-                finishTime: null
+                finishTime: null,
+                image: runnerImage
             });
             
             runnerElement.style.left = '30px';
@@ -1062,32 +1072,32 @@
                         Swal.fire({
                             title: '🎉 PARABÉNS!',
                             html: `<div style="text-align: center;">
-                                  <p>Você <strong style="color: #90ee90">ACERTOU</strong> a aposta! 🎯</p>
+                                  <p>Você <strong style="color: #90ee90">ACERTOU</strong> a aposta! </p>
                                   <p>Apostou no: <strong style="color: #ffd93d">${timeApostado}</strong></p>
                                   <p>Vencedor: <strong style="color: #90ee90">${timeVencedor}</strong></p>
-                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;">🏆 Ganhou a aposta! 🏆</p>
+                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;"> Ganhou a aposta! </p>
                                   </div>`,
                             icon: 'success',
                             background: '#2d1a4a',
                             color: '#fff',
-                            confirmButtonText: '🎊 COMEMORAR!',
+                            confirmButtonText: 'PROSSEGUIR',
                             customClass: {
                                 confirmButton: 'btn-pixel btn-success'
                             }
                         });
                     } else {
                         Swal.fire({
-                            title: '💔 QUE PENA!',
+                            title: ' QUE PENA!',
                             html: `<div style="text-align: center;">
-                                  <p>Você <strong style="color: #ff6b6b">ERROU</strong> a aposta 😔</p>
+                                  <p>Você <strong style="color: #ff6b6b">ERROU</strong> a aposta </p>
                                   <p>Apostou no: <strong style="color: #ffd93d">${timeApostado}</strong></p>
                                   <p>Vencedor: <strong style="color: #90ee90">${timeVencedor}</strong></p>
-                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;">Melhor sorte na próxima! 🍀</p>
+                                  <p style="margin-top: 15px; font-size: 14px; color: #b27bff;">Melhor sorte na próxima! </p>
                                   </div>`,
                             icon: 'error',
                             background: '#2d1a4a',
                             color: '#fff',
-                            confirmButtonText: '🔄 TENTAR NOVAMENTE',
+                            confirmButtonText: ' TENTAR NOVAMENTE',
                             customClass: {
                                 confirmButton: 'btn-pixel btn-warning'
                             }
@@ -1096,7 +1106,7 @@
                 }, 1000);
             }
 
-            // Salvar no banco (código anterior)
+            // Salvar no banco
             const winningTeamId = winningTeam === 'team1' ? {{ $time1->id ?? 'null' }} : {{ $time2->id ?? 'null' }};
             const losingTeamId = winningTeam === 'team1' ? {{ $time2->id ?? 'null' }} : {{ $time1->id ?? 'null' }};
             const winningTeamName = winningTeam === 'team1' ? '{{ $time1->nome_time ?? "TIME 1" }}' : '{{ $time2->nome_time ?? "TIME 2" }}';
